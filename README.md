@@ -18,7 +18,7 @@ This project broadly follows these [instructions](https://www.raspberrypi.org/do
 
 ## Requirements
 
-The NodeJS modules required are pretty much just `underscore`, `async`, and `express`. 
+The NodeJS modules required are pretty much just `underscore`, `async`, and `express`.
 
 The web application requires `angular` and `font-awesome` to render correctly. To make the deployment of this easy, one of the other requirements is `bower`.
 
@@ -41,9 +41,9 @@ $sudo npm start
 There is a startup script included to make the server starting and stopping easier. Do remember that the application is assumed to be installed under `/home/pi/raspberry-wifi-conf`. Feel free to change this in the `assets/init.d/raspberry-wifi-conf` file.
 
 ```sh
-$sudo cp assets/init.d/raspberry-wifi-conf /etc/init.d/raspberry-wifi-conf 
-$sudo chmod +x /etc/init.d/raspberry-wifi-conf  
-$sudo update-rc.d raspberry-wifi-conf defaults
+sudo cp assets/init.d/wifi /etc/init.d/wifi
+sudo chmod +x /etc/init.d/wifi  
+sudo update-rc.d wifi defaults
 ```
 
 ### Gotchas
@@ -67,9 +67,9 @@ $sudo chmod 755 /usr/sbin/hostapd
 
 Note that the `wifi_driver_type` config variable is defaulted to the `nl80211` driver. However, if `iw list` fails on the app startup, it will automatically set the driver type of `rtl871xdrv`. Remember that even though you do not need to update the config / default value - you will need to use the updated `hostapd` binary bundled with this app.
 
-#### `dhcpcd` 
+#### `dhcpcd`
 
-Latest versions of raspbian use dhcpcd to manage network interfaces, since we are running our own dhcp server, if you have dhcpcd installed - make sure you deny the wifi interface as described in the installation section. 
+Latest versions of raspbian use dhcpcd to manage network interfaces, since we are running our own dhcp server, if you have dhcpcd installed - make sure you deny the wifi interface as described in the installation section.
 
 TODO: Handle this automatically.
 
@@ -112,4 +112,3 @@ Step 2: Join the above network, and navigate to the static IP and port we set in
 Step 3: Select your home (or whatever) network, punch in the wifi passcode if any, and click `Submit`. You are done! Your Pi is now on your home wifi!!
 
 ## Testing
-
