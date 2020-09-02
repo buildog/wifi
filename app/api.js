@@ -77,6 +77,7 @@ module.exports = function(wifi_manager, callback) {
                 else {
                   wifi_manager.enable_ap_mode(config.access_point.ssid, function(error) {
                       console.log("... AP mode reset");
+                      process.exit(0);
                   });
                 }
               });
