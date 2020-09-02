@@ -1,5 +1,5 @@
 {
-  "name": "raspberry-wifi-conf",
+  "name": "rpiwifi",
   "version": "0.0.1",
   "description": "Node RPI Wifi Configuration Application",
   "main": "server.js",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/sabhiram/raspberry-wifi-conf.git"
+    "url": "git://github.com/buildog/rpiwifi.git"
   },
   "keywords": [
     "RaspberryPi",
     "Node",
     "Wifi"
   ],
-  "author": "Shaba Abhiram",
+  "author": "buildog",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sabhiram/raspberry-wifi-conf/issues"
