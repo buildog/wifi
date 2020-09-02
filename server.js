@@ -3,6 +3,9 @@ var async               = require("async"),
     dependency_manager  = require("./app/dependency_manager")(),
     config              = require("./config.json");
 
+var reconfigure;
+var hasWifi = false;
+
 /*****************************************************************************\
     1. Check for dependencies
     2. Check to see if we are connected to a wifi AP
@@ -34,14 +37,14 @@ async.series([
     // 2. Check if wifi is enabled / connected
     function test_is_wifi_enabled(next_step) {
         wifi_manager.is_wifi_enabled(function(error, result_ip) {
-			
+
             if (result_ip) {
                 console.log("\nWifi is enabled.");
-                var reconfigure = config.access_point.force_reconfigure || false;
+                reconfigure = config.access_point.force_reconfigure || false;
                 if (reconfigure) {
                     console.log("\nForce reconfigure enabled - try to enable access point");
                 } else {
-                    process.exit(0);
+                    hasWifi = true;
                 }
             } else {
                 console.log("\nWifi is not enabled, Enabling AP for self-configure");
@@ -49,9 +52,15 @@ async.series([
             next_step(error);
         });
     },
-    
+
     // 3. Turn RPI into an access point
     function enable_rpi_ap(next_step) {
+
+        if (hasWifi) {
+          // Do not launch AP if wifi connected
+          return next_step();
+        }
+
         wifi_manager.enable_ap_mode(config.access_point.ssid, function(error) {
             if(error) {
                 console.log("... AP Enable ERROR: " + error);
@@ -70,7 +79,7 @@ async.series([
         console.log("\nHTTP server running...");
         require("./app/api.js")(wifi_manager, next_step);
     },
-    
+
 
 ], function(error) {
     if (error) {
