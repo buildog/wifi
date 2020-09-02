@@ -67,22 +67,8 @@ module.exports = function(wifi_manager, callback) {
                 response.redirect("/");
             }
             // Success! - exit
-
-            setTimeout(() => {
-              wifi_manager.is_wifi_enabled(function(error, result_ip) {
-                if (result_ip) {
-                  console.log("Wifi Enabled!");
-                  process.exit(0);
-                }
-                else {
-                  wifi_manager.enable_ap_mode(config.access_point.ssid, function(error) {
-                      console.log("... AP mode reset");
-                  });
-                }
-              });
-            }, 10000)
-
-
+            console.log("Wifi Enabled! - Exiting");
+            process.exit(0);
         });
     });
 
