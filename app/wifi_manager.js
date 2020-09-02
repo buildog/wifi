@@ -68,14 +68,14 @@ module.exports = function() {
         function run_command_and_set_fields(cmd, fields, callback) {
             exec(cmd, function(error, stdout, stderr) {
                 if (error) return callback(error);
-                
+
                 for (var key in fields) {
                     re = stdout.match(fields[key]);
                     if (re && re.length > 1) {
                         output[key] = re[1];
                     }
                 }
-                
+
                 callback(null);
             });
         }
@@ -134,17 +134,17 @@ module.exports = function() {
 
     // Access Point related functions
     _is_ap_enabled_sync = function(info) {
-        
+
         var is_ap = info["ap_ssid"] == config.access_point.ssid;
-        
+
         if(is_ap == true){
 			return info["ap_ssid"];
 		}
 		else{
-			
+
 			return null;
 		}
-        
+
     },
 
     _is_ap_enabled = function(callback) {
@@ -214,7 +214,7 @@ module.exports = function() {
                     });
                 },
 
-                
+
                 function reboot_network_interfaces(next_step) {
                     _reboot_wireless_network(config.wifi_interface, next_step);
                 },
@@ -226,7 +226,7 @@ module.exports = function() {
                         next_step();
                     });
                 },
-                
+
                 function restart_dnsmasq_service(next_step) {
                     exec("sudo systemctl restart dnsmasq", function(error, stdout, stderr) {
                         if (!error) console.log("... dnsmasq server restarted!");
@@ -234,7 +234,7 @@ module.exports = function() {
                         next_step();
                     });
                 },
-                
+
 
             ], callback);
         });
@@ -247,13 +247,13 @@ module.exports = function() {
             if (error) return callback(error);
 
             if (result_ip) {
-                console.log("\nWifi connection is enabled with IP: " + result_ip);
+                console.log("\nWifi connection is already enabled with IP: " + result_ip);
                 return callback(null);
             }
 
             async.series([
-            
-				
+
+
 				//Add new network
 				function update_wpa_supplicant(next_step) {
                     write_template_to_file(
@@ -292,7 +292,7 @@ module.exports = function() {
                         next_step();
                     });
                 },
-                
+
                 function restart_hostapd_service(next_step) {
                     exec("sudo systemctl stop hostapd", function(error, stdout, stderr) {
                         //console.log(stdout);
@@ -300,7 +300,7 @@ module.exports = function() {
                         next_step();
                     });
                 },
-                
+
                 function restart_dhcp_service(next_step) {
                     exec("sudo systemctl restart dhcpcd", function(error, stdout, stderr) {
                         if (!error) console.log("... dhcpcd server restarted!");
