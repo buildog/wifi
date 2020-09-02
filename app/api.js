@@ -80,7 +80,7 @@ module.exports = function(wifi_manager, callback) {
                   });
                 }
               });
-            }, 4000)
+            }, 10000)
 
 
         });
